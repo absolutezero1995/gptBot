@@ -1,12 +1,15 @@
+require('dotenv').config();
+const express = require('express');
+const app = express();
+
 const Telegraf = require('telegraf');
 const OpenAI = require('openai');
-require('dotenv').config();
+const PORT = process.env.PORT;
 
 
 const telegramToken = `${process.env.BOT_TOKEN}`;
 const openaiApiKey = `${process.env.GPT_TOKEN}`;
 
-console.log(telegramToken, 'telegramtoken')
 
 const bot = new Telegraf.Telegraf(telegramToken);
 
@@ -38,3 +41,8 @@ bot.launch();
 
 process.once('SIGINT', () => bot.stop('SIGINT'))
 process.once('SIGTERM', () => bot.stop('SIGTERM'))
+
+
+app.listen(PORT, (req, res) => {
+    console.log(`This gpt bot on ${PORT}`);
+})
